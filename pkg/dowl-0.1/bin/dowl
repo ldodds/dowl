@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'getoptlong'
+require 'rdf/redland'
+require 'dowl'
+require 'erb'
+
+PROGRAM     = File::basename $0
+
+schema = DOWL::Schema.create_from_file(ARGV[0])
+if ARGV[1]
+  generator = DOWL::Generator.new( schema, ARGV[1] )
+else
+  generator = DOWL::Generator.new( schema )
+end
+file = generator.run()
+puts file
