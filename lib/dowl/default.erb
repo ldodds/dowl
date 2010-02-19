@@ -17,7 +17,7 @@
 		  	<dd><%= schema.ontology.modified %></dd>
 		  <% end %>		  		  
 		  <dt>Authors</dt>
-		  <dd><% schema.ontology.authors.each do |author| %><a href="<%= author.uri %>"><%= author.name %></a><%end%></dd>
+		  <% schema.ontology.authors.each do |author| %><dd><a href="<%= author.uri %>"><%= author.name %></a></dd><%end%>
 		</dl>
 		
 		<h1>Abstract</h1>

@@ -44,7 +44,7 @@ module DOWL
     
     FOAF_MAKER = FOAF["maker"]
     FOAF_NAME = FOAF["name"]
-    
+        
   end
 
 end
