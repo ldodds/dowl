@@ -22,16 +22,16 @@ class SchemaTest < Test::Unit::TestCase
   end
   
   def test_create_from_file
-    file = "examples/wo.ttl"
+    file = "examples/example.ttl"
     DOWL::Schema.create_from_file(File.expand_path(file))     
   end
   
   def test_read_classes_from_sample()
-    file = "examples/wo.ttl"
+    file = "examples/example.ttl"
     schema = DOWL::Schema.create_from_file(File.expand_path(file))     
     classes = schema.classes()
     assert_not_nil classes
-    assert_equal(28, classes.length)
+    assert_equal(2, classes.length)
   end
   
   def test_identify_owl_classes()
