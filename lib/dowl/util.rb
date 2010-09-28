@@ -15,26 +15,33 @@ module DOWL
   end
   
   class LabelledDocObject < DOWL::DocObject
-     def initialize(resource, schema)
+    
+    def initialize(resource, schema)
        super(resource, schema)
-     end
-     def short_name()
-       uri = resource.to_s
-       ontology_uri = schema.ontology.to_s
-       return uri.gsub(ontology_uri, "")
-     end
+    end
+     
+    def short_name()
+      uri = @resource.to_s
+      ontology_uri = @schema.ontology.uri
+      return uri.gsub(ontology_uri, "")
+    end
+     
     def label()
       return get_literal(DOWL::Namespaces::RDFS.label)
-    end    
+    end
+        
     def comment()
       return get_literal(DOWL::Namespaces::RDFS.comment)
     end
+    
     def status()      
-       return get_literal(DOWL::Namespaces::VS.status)
-    end     
+      return get_literal(DOWL::Namespaces::VS.status)
+    end
+         
     def <=>(other)
       return label().downcase <=> other.label().downcase
     end    
+    
   end
   
 end
