@@ -32,7 +32,7 @@ module DOWL
     end
     
     def uri() 
-        return @resource.uri.to_s
+        return @resource.to_s
     end
     
     def title()
