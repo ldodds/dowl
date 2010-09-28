@@ -9,11 +9,7 @@ module DOWL
     end  
     
     def get_literal(property)
-      object = @resource.get_property(property)
-      if object
-        return object.value
-      end  
-      return nil      
+      return @schema.model.first_value(RDF::Pattern.new( @resource, property ) )
     end
     
   end
@@ -23,18 +19,18 @@ module DOWL
        super(resource, schema)
      end
      def short_name()
-       uri = resource.uri.to_s
-       ontology_uri = schema.ontology.uri.to_s
+       uri = resource.to_s
+       ontology_uri = schema.ontology.to_s
        return uri.gsub(ontology_uri, "")
      end
     def label()
-      return get_literal(DOWL::Namespaces::RDFS_LABEL)
+      return get_literal(DOWL::Namespaces::RDFS.label)
     end    
     def comment()
-      return get_literal(DOWL::Namespaces::RDFS_COMMENT)
+      return get_literal(DOWL::Namespaces::RDFS.comment)
     end
     def status()      
-       return get_literal(DOWL::Namespaces::VS_STATUS)
+       return get_literal(DOWL::Namespaces::VS.status)
     end     
     def <=>(other)
       return label().downcase <=> other.label().downcase

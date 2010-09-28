@@ -15,13 +15,12 @@ module DOWL
         init()
     end
     
-    def Schema.create_from_file(file=nil, format="turtle", mimetype="", base=nil)
+    def Schema.create_from_file(file=nil)
       if file == nil
         raise "Filename should be provided"
       end
-      model = Redland::Model.new()
-      parser = Redland::Parser.new(format, mimetype, base)
-      parser.parse_into_model(model,"file:#{file}")
+      model = RDF::Graph.new(file)
+      model.load!
       
       dir = File.dirname(file)
       introduction = File.join(dir, "introduction.html")
@@ -33,14 +32,14 @@ module DOWL
     
     def init()
       @classes = Hash.new
-      init_classes( DOWL::Namespaces::OWL_CLASS )
-      init_classes( DOWL::Namespaces::RDFS_CLASS )
-      ontology = model.subject(Redland::TYPE, DOWL::Namespaces::OWL_ONTOLOGY)
+      init_classes( DOWL::Namespaces::OWL.Class )
+      init_classes( DOWL::Namespaces::RDFS.Class )
+      ontology = @model.first_subject(RDF::Query::Pattern.new( RDF.type, DOWL::Namespaces::OWL.Ontology ) )
       if ontology
         @ontology = Ontology.new(ontology, self)
       end
-      @datatype_properties = init_properties( DOWL::Namespaces::OWL_DATATYPE_PROPERTY)      
-      @object_properties = init_properties( DOWL::Namespaces::OWL_OBJECT_PROPERTY)
+      @datatype_properties = init_properties( DOWL::Namespaces::OWL.DatatypeProperty)      
+      @object_properties = init_properties( DOWL::Namespaces::OWL.ObjectProperty)
     end
     
     def ontology()
@@ -48,18 +47,18 @@ module DOWL
     end
     
     def init_classes(type)
-      model.find(nil, Redland::TYPE, type) do |s,p,o|
-        if s.resource?
-            cls = DOWL::Class.new(s, self)
-            @classes[ s.uri.to_s ] = cls                    
+      @model.query( RDF::Query::Pattern.new( nil, RDF.type, type ) ) do |statement|
+        if !statement.subject.anonymous?
+            cls = DOWL::Class.new(statement.subject, self)
+            @classes[ statement.subject.to_s ] = cls                    
         end
       end      
     end
     
     def init_properties(type)
       properties = Hash.new
-      model.find(nil, Redland::TYPE, type) do |s,p,o|
-        properties[ s.uri.to_s] = DOWL::Property.new(s, self)
+      @model.query( RDF::Query::Pattern.new( nil, RDF.type, type ) ) do |statement|
+        properties[ statement.subject.to_s] = DOWL::Property.new(statement.subject, self)
       end      
       return properties      
     end

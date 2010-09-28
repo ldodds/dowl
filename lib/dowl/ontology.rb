@@ -48,6 +48,7 @@ module DOWL
     end
     
     def authors()      
+      #FIXME
       people = @resource.get_properties(DOWL::Namespaces::FOAF_MAKER)
       authors = []
       if people

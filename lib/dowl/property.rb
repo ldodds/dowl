@@ -9,18 +9,17 @@ module DOWL
     end
     
     def see_alsos()
-       seeAlsos = @resource.get_properties(DOWL::Namespaces::RDFS_SEE_ALSO)
        links = []
-       seeAlsos.each do |obj|
-         links << obj.uri
-       end
+       @schema.model.query(@resource, RDFS.seeAlso) do |statement|
+         links << statement.object.to_s
+       end       
        return links
     end
         
     def sub_property_of()
-      parent = @resource.get_property(DOWL::Namespaces::RDFS_SUB_PROPERTY_OF)
+      parent = @schema.model.first_value(RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.subPropertyOf) )
       if parent
-        uri = parent.uri.to_s
+        uri = parent.to_s
         if @schema.properties[uri]
           return @schema.properties[uri]
         else
@@ -31,17 +30,18 @@ module DOWL
     end
         
     def range()
-      ranges = @resource.get_properties(DOWL::Namespaces::RDFS_RANGE)
+      ranges = []
+      @schema.model.query(RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.range ) ) do |statement|
+        ranges << statement.object
+      end  
       classes = []
-      if ranges
-        ranges.each do |o|
-          if o.resource?
-            uri = o.uri.to_s        
-            if @schema.classes[uri]
-              classes << @schema.classes[uri]
-            else
-              classes << uri
-            end
+      ranges.each do |o|
+        if o.resource?
+          uri = o.to_s        
+          if @schema.classes[uri]
+            classes << @schema.classes[uri]
+          else
+            classes << uri
           end
         end
       end
@@ -49,29 +49,29 @@ module DOWL
     end
 
     def domain()
-      domains = @resource.get_properties(DOWL::Namespaces::RDFS_DOMAIN)
+      domains = []
+      @schema.model.query(RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.domain ) ) do |statement|
+        domains << statement.object
+      end  
       classes = []
-      if domains
-        domains.each do |o|
-          if o.resource?
-            uri = o.uri.to_s         
-            if @schema.classes[uri]
-              classes << @schema.classes[uri]
-            else
-              classes << uri
-            end
+      domains.each do |o|
+        if o.resource?
+          uri = o.to_s         
+          if @schema.classes[uri]
+            classes << @schema.classes[uri]
+          else
+            classes << uri
           end
-          #TODO union
         end
+        #TODO union
       end
       return classes
     end
     
     def sub_properties()
-      children = @resource.model.find(nil, DOWL::Namespaces::RDFS_SUB_PROPERTY_OF, @resource)
       list = []
-      children.each do |child|
-        list << DOWL::Property.new(child.subject, @schema)
+      @schema.model.query(RDF::Query::Pattern.new( nil, DOWL::Namespaces::RDFS.subPropertyOf, @resource ) ) do |statement|
+        list << DOWL::Property.new( statement.subject, @schema )
       end
       return list
     end            
