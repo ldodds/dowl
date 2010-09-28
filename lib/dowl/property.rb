@@ -10,14 +10,16 @@ module DOWL
     
     def see_alsos()
        links = []
-       @schema.model.query(@resource, RDFS.seeAlso) do |statement|
+       @schema.model.query(
+         RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.seeAlso ) ) do |statement|
          links << statement.object.to_s
        end       
        return links
     end
         
     def sub_property_of()
-      parent = @schema.model.first_value(RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.subPropertyOf) )
+      parent = @schema.model.first_value(
+        RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.subPropertyOf) )
       if parent
         uri = parent.to_s
         if @schema.properties[uri]
