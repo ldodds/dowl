@@ -5,7 +5,7 @@ require 'rake/testtask'
 require 'rake/clean'
 
 NAME = "dowl"
-VER = "0.1"
+VER = "0.2"
 
 RDOC_OPTS = ['--quiet', '--title', 'dowl Reference', '--main', 'README']
 
@@ -26,14 +26,14 @@ SPEC =
     s.description = s.summary
     s.author = "Leigh Dodds"
     s.email = 'leigh.dodds@talis.com'
-    s.homepage = 'http://www.ldodds.com/projects/dowl'
-    #s.rubyforge_project = ''
+    s.homepage = 'http://github.com/ldodds/dowl'
     s.files = PKG_FILES
     s.require_path = "lib" 
     s.bindir = "bin"
     s.executables = ["dowl"]
     s.test_file = "tests/ts_dowl.rb"
     s.add_dependency("mocha", ">= 0.9.5")
+    s.add_dependency("rdf-raptor", ">= 0.4.0")
   end
       
 Rake::GemPackageTask.new(SPEC) do |pkg|
@@ -47,14 +47,6 @@ Rake::RDocTask.new do |rdoc|
     rdoc.main = "README"
     
 end
-
-#desc "Publish rdoc output to rubyforge"
-#task "publish-docs" => ["rdoc"] do 
-#  rubyforge_path = "/var/www/gforge-projects/#{NAME}/" 
-#  sh "scp -r doc/* " + 
-#    "#{ENV["RUBYFORGE_USER"]}@rubyforge.org:#{rubyforge_path}", 
-#    :verbose => true 
-#end 
 
 Rake::TestTask.new do |test|
   test.test_files = FileList['tests/tc_*.rb']

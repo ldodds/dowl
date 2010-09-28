@@ -47,8 +47,8 @@ module DOWL
       return get_literal(DOWL::Namespaces::DCTERMS_MODIFIED)
     end
     
-    def authors()
-      people = @resource.get_properties(DOWL::Namespaces::FOAF_MAKER)      
+    def authors()      
+      people = @resource.get_properties(DOWL::Namespaces::FOAF_MAKER)
       authors = []
       if people
         people.each do |s|          
