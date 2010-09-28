@@ -2,8 +2,6 @@ A simple command-line tool for generating HTML documentation from RDFS/OWL schem
 
 INSTALLATION
 
-dowl depends on the Redland RDF framework and its Ruby bindings. You'll need to install those first. See http://librdf.org/ for more details.
-
 Once you have the code checked out simple do:
 
 rake install
