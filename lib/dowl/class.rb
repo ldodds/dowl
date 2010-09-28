@@ -14,9 +14,10 @@ module DOWL
     end
     
     def sub_class_of()
-      parent = @resource.get_property(DOWL::Namespaces::RDFS_SUB_CLASS_OF)
+      parent = @schema.model.first_value( 
+        RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.subClassOf ) )
       if parent
-        uri = parent.uri.to_s
+        uri = parent.to_s
         if @schema.classes[uri]
           return @schema.classes[uri]
         else
@@ -27,10 +28,10 @@ module DOWL
     end
    
     def see_alsos()
-       seeAlsos = @resource.get_properties(DOWL::Namespaces::RDFS_SEE_ALSO)
        links = []
-       seeAlsos.each do |obj|
-         links << obj.uri
+       @schema.model.query( 
+         RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.seeAlso ) ) do |statement|
+         links << statement.object.to_s
        end
        return links
     end
@@ -40,14 +41,16 @@ module DOWL
     end
     
     def sub_classes()
-      children = @resource.model.find(nil, DOWL::Namespaces::RDFS_SUB_CLASS_OF, @resource)
       list = []
-      children.each do |child|
-        list << DOWL::Class.new(child.subject, @schema)
+        
+      @schema.model.query(
+        RDF::Query::Pattern.new( nil, DOWL::Namespaces::RDFS.subClassOf, @resource) ) do |statement|
+          list << DOWL::Class.new(statement.subject, @schema)
       end
       return list
     end
     
   end
+  
   
 end
