@@ -9,7 +9,7 @@ module DOWL
     end  
     
     def get_literal(property)
-      return @schema.model.first_value(RDF::Pattern.new( @resource, property ) )
+      return @schema.model.first_value(RDF::Query::Pattern.new( @resource, property ) )
     end
     
   end

@@ -8,11 +8,15 @@ module DOWL
      end
      
      def uri()
-       return @resource.uri
+       return @resource.to_s
      end
      
      def name()
-       return get_literal(DOWL::Namespaces::FOAF_NAME)
+       name = get_literal(DOWL::Namespaces::FOAF.name)
+       if name == nil
+         name = uri()
+       end
+       return name
      end
      
      def <=>(other)
@@ -32,30 +36,27 @@ module DOWL
     end
     
     def title()
-      return get_literal(DOWL::Namespaces::DCTERMS_TITLE)
+      return get_literal(DOWL::Namespaces::DCTERMS.title)
     end
     
     def comment()
-      return get_literal(DOWL::Namespaces::RDFS_COMMENT)
+      return get_literal(DOWL::Namespaces::RDFS.comment)
     end
         
     def created()
-      return get_literal(DOWL::Namespaces::DCTERMS_CREATED)
+      return get_literal(DOWL::Namespaces::DCTERMS.created)
     end
 
     def modified()
-      return get_literal(DOWL::Namespaces::DCTERMS_MODIFIED)
+      return get_literal(DOWL::Namespaces::DCTERMS.modified)
     end
     
     def authors()      
-      #FIXME
-      people = @resource.get_properties(DOWL::Namespaces::FOAF_MAKER)
       authors = []
-      if people
-        people.each do |s|          
-          authors << Person.new(s, @schema)
-        end
-      end
+      @schema.model.query( 
+        RDF::Query::Pattern.new( @resource, DOWL::Namespaces::FOAF.maker ) ) do |statement|
+          authors << Person.new( statement.object, @schema )
+      end         
       return authors.sort     
     end
     

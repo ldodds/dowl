@@ -34,7 +34,7 @@ module DOWL
       @classes = Hash.new
       init_classes( DOWL::Namespaces::OWL.Class )
       init_classes( DOWL::Namespaces::RDFS.Class )
-      ontology = @model.first_subject(RDF::Query::Pattern.new( RDF.type, DOWL::Namespaces::OWL.Ontology ) )
+      ontology = @model.first_subject( RDF::Query::Pattern.new( nil, RDF.type, DOWL::Namespaces::OWL.Ontology ) )
       if ontology
         @ontology = Ontology.new(ontology, self)
       end

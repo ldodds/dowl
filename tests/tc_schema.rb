@@ -36,4 +36,5 @@ class SchemaTest < Test::Unit::TestCase
     schema = DOWL::Schema.new(model)
     assert_equal(1, schema.classes.length)
   end
+  
 end
