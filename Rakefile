@@ -5,7 +5,7 @@ require 'rake/testtask'
 require 'rake/clean'
 
 NAME = "dowl"
-VER = "0.3"
+VER = "0.4"
 
 RDOC_OPTS = ['--quiet', '--title', 'dowl Reference', '--main', 'README']
 

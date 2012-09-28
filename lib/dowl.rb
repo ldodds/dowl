@@ -9,6 +9,8 @@ require 'dowl/property'
 require 'dowl/ontology'
 require 'dowl/generator'
 
+require 'ftools'
+
 module DOWL
       
   class Namespaces

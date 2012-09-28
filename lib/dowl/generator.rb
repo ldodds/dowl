@@ -15,7 +15,17 @@ module DOWL
        return default_template_file = File.join(dir, "default.erb")
     end
     
-    def run()      
+    def copy_assets
+      asset_dir = File.join( File.dirname( __FILE__ ), "assets" )
+      Dir.new(asset_dir).each() do |file|
+        if file != "." and file != ".."
+          File.copy( File.join(asset_dir, file), Dir.pwd )
+        end
+      end      
+    end
+    
+    def run()   
+      copy_assets()   
       b = binding
       schema = @schema
       introduction = @introduction

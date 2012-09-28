@@ -8,6 +8,10 @@ module DOWL
       super(resource, schema)
     end
     
+    def uri
+      return @resource.to_s
+    end
+    
     def see_alsos()
        links = []
        @schema.model.query(

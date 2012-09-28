@@ -39,7 +39,7 @@ module DOWL
     end
     
     def status()      
-      return get_literal(DOWL::Namespaces::VS.status)
+      return get_literal(DOWL::Namespaces::VS.term_status)
     end
          
     def <=>(other)
