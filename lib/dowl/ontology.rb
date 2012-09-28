@@ -31,8 +31,8 @@ module DOWL
         super(resource, schema)  
     end
     
-    def uri() 
-        return @resource.to_s
+    def uri()       
+      return @resource.to_s
     end
     
     def title()

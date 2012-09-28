@@ -21,8 +21,25 @@ class SchemaTest < Test::Unit::TestCase
     classes = schema.classes()
     assert_not_nil classes
     assert_equal(2, classes.length)
+
+    c = classes["http://www.example.org/dowl/SomeClass"]
+    assert_equal("SomeClass", c.short_name)
+    assert_equal("http://www.example.org/dowl/SomeClass", c.uri)
+
   end
-  
+
+  def test_hash_uris()
+    file = "examples/example2.ttl"
+    schema = DOWL::Schema.create_from_file(File.expand_path(file))     
+    classes = schema.classes()
+    assert_not_nil classes
+    assert_equal(1, classes.length)
+    c = classes.values[0]
+    assert_equal("SomeClass", c.short_name)
+    assert_equal("http://www.example.org/dowl#SomeClass", c.uri)
+  end
+
+      
   def test_identify_owl_classes()    
     model = RDF::Graph.new()
     model << RDF::Statement.new( RDF::URI.new("http://www.example.com/"), RDF.type, DOWL::Namespaces::OWL.Class)

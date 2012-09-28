@@ -5,7 +5,7 @@ require 'rake/testtask'
 require 'rake/clean'
 
 NAME = "dowl"
-VER = "0.2"
+VER = "0.3"
 
 RDOC_OPTS = ['--quiet', '--title', 'dowl Reference', '--main', 'README']
 
@@ -55,7 +55,7 @@ end
 desc "Install from a locally built copy of the gem"
 task :install do
   sh %{rake package}
-  sh %{sudo gem install pkg/#{NAME}-#{VER}}
+  sh %{sudo gem install --no-ri --no-rdoc pkg/#{NAME}-#{VER}}
 end
 
 desc "Uninstall the gem"
