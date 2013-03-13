@@ -15,7 +15,7 @@ module DOWL
     
     def sub_class_of()
       parent = @schema.model.first_value( 
-        RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.subClassOf ) )
+        RDF::Query::Pattern.new( @resource, DOWL::Namespaces::RDFS.subClassOf ) )        
       if parent
         uri = parent.to_s
         if @schema.classes[uri]

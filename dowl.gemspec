@@ -1,4 +1,4 @@
-VER = "0.5"
+VER = "0.6"
 
 RDOC_OPTS = ['--quiet', '--title', 'dowl Reference', '--main', 'README']
 
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
     s.name = "dowl"
     s.version = VER
     s.platform = Gem::Platform::RUBY
-    s.required_ruby_version = ">= 1.8.5"    
+    s.required_ruby_version = ">= 1.9"    
     s.has_rdoc = true
     s.extra_rdoc_files = ["README", "CHANGES"]
     s.rdoc_options = RDOC_OPTS

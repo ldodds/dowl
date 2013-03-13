@@ -1,15 +1,14 @@
 require 'rubygems'
 require 'erb'
 require 'rdf'
-require 'rdf/raptor'
+require 'fileutils'
+require 'linkeddata'
 require 'dowl/util'
 require 'dowl/schema'
 require 'dowl/class'
 require 'dowl/property'
 require 'dowl/ontology'
 require 'dowl/generator'
-
-require 'ftools'
 
 module DOWL
       

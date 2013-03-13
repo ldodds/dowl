@@ -19,7 +19,7 @@ module DOWL
       asset_dir = File.join( File.dirname( __FILE__ ), "assets" )
       Dir.new(asset_dir).each() do |file|
         if file != "." and file != ".."
-          File.copy( File.join(asset_dir, file), Dir.pwd )
+          FileUtils.cp( File.join(asset_dir, file), Dir.pwd )
         end
       end      
     end
