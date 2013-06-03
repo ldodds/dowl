@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'erb'
-require 'rdf'
 require 'fileutils'
 require 'linkeddata'
 require 'dowl/util'
