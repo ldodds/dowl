@@ -1,4 +1,4 @@
-VER = "0.6"
+VER = "0.7"
 
 RDOC_OPTS = ['--quiet', '--title', 'dowl Reference', '--main', 'README']
 
