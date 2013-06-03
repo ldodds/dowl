@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
     s.extra_rdoc_files = ["README", "CHANGES"]
     s.rdoc_options = RDOC_OPTS
     s.summary = "dowl OWL/RDF doc generator"
-    s.description = s.summary
+    s.description = "Generate simple HTML documentation for subset of RDFS/OWL"
     s.author = "Leigh Dodds"
     s.email = 'leigh@ldodds.com'
     s.homepage = 'http://github.com/ldodds/dowl'
@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
     s.test_file = "tests/ts_dowl.rb"
     s.add_dependency("mocha", ">= 0.9.5")
     s.add_dependency("linkeddata", ">=1.0")
+    s.add_dependency("redcarpet", ">=2.2.2")
 end

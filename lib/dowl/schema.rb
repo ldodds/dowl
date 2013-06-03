@@ -23,11 +23,13 @@ module DOWL
       model.load!
       
       dir = File.dirname(file)
-      introduction = File.join(dir, "introduction.html")
-      if File.exists?(introduction)
-        return Schema.new(model, introduction)
-      end      
-      return Schema.new(model)
+      if File.exists?(File.join(dir, "introduction.html"))         
+        return Schema.new(model, File.join(dir, "introduction.html"))
+      elsif File.exists?( File.join(dir, "introduction.md"))
+        return Schema.new(model, File.join(dir, "introduction.md"))
+      else
+        return Schema.new(model)
+      end            
     end       
     
     def init()

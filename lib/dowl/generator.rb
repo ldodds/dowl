@@ -7,6 +7,11 @@ module DOWL
       @schema = schema
       if schema.introduction
         @introduction = File.read(schema.introduction)
+        if schema.introduction.end_with?(".md")
+          renderer = Redcarpet::Render::HTML.new({})
+          markdown = Redcarpet::Markdown.new(renderer, {})      
+          @introduction = markdown.render(@introduction)
+        end
       end      
     end
     

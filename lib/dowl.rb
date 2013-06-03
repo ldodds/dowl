@@ -2,6 +2,8 @@ require 'rubygems'
 require 'erb'
 require 'fileutils'
 require 'linkeddata'
+require 'redcarpet'
+
 require 'dowl/util'
 require 'dowl/schema'
 require 'dowl/class'
